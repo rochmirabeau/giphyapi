@@ -35,17 +35,17 @@ $(".button").click(function() {
    	.done(function(response) {
    	var results = response.data
    
-   	console.log(results[0].embed_url)
-	embeds.push(results.map((result) => result.embed_url))
+   	console.log(results[0].images.fixed_height.url)
+	embeds.push(results.map((result) => result.images.fixed_height.url))
 
 
 	//place images into image div
-	var img = document.createElement("img")
 	for (let i = 0; i<embeds[0].length; i++){
+	var img = $('<img />').attr({
 	
- 	img.id = i
- 	img.src = embeds[0][i]
- 	$("#pictureArea").append(img)
+ 	"id": "pic" + i,
+ 	"src": embeds[0][i]})
+	$('#pictureArea').append(img)
  	console.log(img)
 	}
 
