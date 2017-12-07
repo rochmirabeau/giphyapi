@@ -1,7 +1,7 @@
 console.log("hello world!")
 
 var APIKey = "JjSxlr6ZotKXaAxJEz7s6hTHPdvIDsS3"
-var search = "ali g"
+var search = ""
 var starterButtons = [
 	"Akuma",
 	"Ryu",
@@ -9,6 +9,7 @@ var starterButtons = [
 	"Street Fighter"
 	]
 var btn = document.createElement("button");
+var embeds = []
 var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + search + "&api_key=" + APIKey + "&limit=5"
 // queryURL.done(function(data) { console.log("success got data", data); });
 
@@ -22,21 +23,39 @@ for (let i = 0; i < starterButtons.length; i++){
 
 	
 $(".button").click(function() {
-	console.log("button clicked")
-})
-
-
- $("#button0").on("click" , function() {
-  	console.log(queryURL)          
-   	$.ajax({
+	search = this.textContent
+	queryURL = "http://api.giphy.com/v1/gifs/search?q=" + search + "&api_key=" + APIKey + "&limit=5"
+	console.log(search, queryURL)	
+	console.log(this.textContent)
+	//ajax call
+   	$.ajax({                    	
    	url: queryURL, 
    		
    })
    	.done(function(response) {
    	var results = response.data
    
-   	console.log(response, results)}
-   	)
-	})
+   	console.log(results[0].embed_url)
+	embeds.push(results.map((result) => result.embed_url	
+	))
+   })	
 
-  }) 
+	//place images into image div
+	var img = document.createElement("img");
+	for (let i = 0; i<embeds.length; i++){
+	
+	$("#pictureArea").append(img)
+	img.id = i
+	img.src = embeds[i][i]
+	}
+
+
+
+
+
+
+
+
+})
+
+   }) 
