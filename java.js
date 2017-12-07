@@ -36,18 +36,30 @@ $(".button").click(function() {
    	var results = response.data
    
    	console.log(results[0].embed_url)
-	embeds.push(results.map((result) => result.embed_url	
-	))
-   })	
+	embeds.push(results.map((result) => result.embed_url))
+
 
 	//place images into image div
-	var img = document.createElement("img");
-	for (let i = 0; i<embeds.length; i++){
+	var img = document.createElement("img")
+	for (let i = 0; i<embeds[0].length; i++){
 	
-	$("#pictureArea").append(img)
-	img.id = i
-	img.src = embeds[i][i]
+ 	img.id = i
+ 	img.src = embeds[0][i]
+ 	$("#pictureArea").append(img)
+ 	console.log(img)
 	}
+
+   }) //button click	
+
+
+
+
+
+
+
+
+
+
 
 
 
