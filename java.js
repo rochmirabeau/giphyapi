@@ -10,6 +10,7 @@ var starterButtons = [
 	]
 var btn = document.createElement("button");
 var embeds = []
+var stills = []
 var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + search + "&api_key=" + APIKey + "&limit=5"
 // queryURL.done(function(data) { console.log("success got data", data); });
 
@@ -21,8 +22,18 @@ for (let i = 0; i < starterButtons.length; i++){
 	console.log("populated" + i)
 	}
 
-	
+//userInput adds button to array
+$("#submit").click(function() {
+	var count = 0
+	console.log($("#userInput").val().trim());
+	$('#buttonArea').prepend('<button id="userButton' + count + '" + class="button">' + $("#userInput").val().trim() + '</button>')
+	console.log("userButton" + count + " is " + $("#userInput").val().trim())
+	count++ 
+})//end userInput adds button to array
+
+// on click, empty the picture area div, change search to the button pressed, update queryURL, make ajax call, log results, update embeds	
 $(".button").click(function() {
+	$("#pictureArea").empty()
 	search = this.textContent
 	queryURL = "http://api.giphy.com/v1/gifs/search?q=" + search + "&api_key=" + APIKey + "&limit=5"
 	console.log(search, queryURL)	
@@ -37,35 +48,42 @@ $(".button").click(function() {
    
    	console.log(results[0].images.fixed_height.url)
 	embeds.push(results.map((result) => result.images.fixed_height.url))
-
+	stills.push(results.map((result) => result.images.fixed_height_still.url))	
 
 	//place images into image div
 	for (let i = 0; i<embeds[0].length; i++){
 	var img = $('<img />').attr({
 	
  	"id": "pic" + i,
+	"class": "image playing",
  	"src": embeds[0][i]})
 	$('#pictureArea').append(img)
  	console.log(img)
 	}
 
-   }) //button click	
+// image click
+
+$(".image").click(function() {
+
+	//switch img src between embed and still
+	console.log(this.getAttribute("src"));
+	  var src = $(this).attr("src");
+  if($(this).hasClass('playing')){
+     //stop
+     $(this).attr('src', src.replace(/\.gif/i, "_s.gif"))
+     $(this).removeClass('playing');
+  } else {
+    //play
+    $(this).addClass('playing');
+    $(this).attr('src', src.replace(/\_s.gif/i, ".gif"))
+  }
+
+
+ } ) //end image click
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+   }) //end button click	
 
 
 })
