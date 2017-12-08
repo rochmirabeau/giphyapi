@@ -28,8 +28,9 @@ for (let i = 0; i < starterButtons.length; i++){
 $("#submit").click(function(e) {
 //	e.preventDefault()
 	console.log($("#userInput").val().trim());
-	$('#buttonArea').prepend('<button id="userButton' + count + '" + class="button">' + $("#userInput").val().trim() + '</button>')
-	console.log("userButton" + count + " is " + $("#userInput").val().trim())
+	var input = $("#userInput").val().trim()
+	$('#buttonArea').prepend('<button id="userButton' + count + '" + class="button">' + input + '</button>')
+	console.log("userButton" + count + " is " + input)
 	count++ 
 })//end userInput adds button to array
 
@@ -72,7 +73,11 @@ $(document).on("click" , ".button" , function() {
 	
 	//give id's to divs and add spans with ratings
 	for (let i = 0 ; i < embeds[0].length; i++) {
-		$("#pic" + i).parent().attr("id" , "imgContainer" + i).css({"display" : "inline" , "float" : "left"}).prepend("<h5 class='heading'>Rating: " + ratings[0][i] + "</h5>")
+		$("#pic" + i).parent()
+		     .attr("id" , "imgContainer" + i)
+		     .css({"display" : "inline" , "float" : "left"})
+		     .prepend("<h5 class='heading'>Rating: " + ratings[0][i] + "</h5>")
+
 	$(".heading").css("width" , "200px")
 	}	
 
