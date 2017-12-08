@@ -9,8 +9,9 @@ var starterButtons = [
 	"Street Fighter"
 	]
 var btn = document.createElement("button");
+var count = 0
 var embeds = []
-var stills = []
+// var stills = []
 var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + search + "&api_key=" + APIKey + "&limit=5"
 // queryURL.done(function(data) { console.log("success got data", data); });
 
@@ -23,8 +24,9 @@ for (let i = 0; i < starterButtons.length; i++){
 	}
 
 //userInput adds button to array
-$("#submit").click(function() {
-	var count = 0
+$("#submit").click(function(e) {
+//	e.preventDefault()
+//	var count = 0
 	console.log($("#userInput").val().trim());
 	$('#buttonArea').prepend('<button id="userButton' + count + '" + class="button">' + $("#userInput").val().trim() + '</button>')
 	console.log("userButton" + count + " is " + $("#userInput").val().trim())
@@ -32,10 +34,11 @@ $("#submit").click(function() {
 })//end userInput adds button to array
 
 // on click, empty the picture area div, change search to the button pressed, update queryURL, make ajax call, log results, update embeds	
-$(".button").click(function() {
+$(".button").click(function(e) {
+//	e.preventDefault()
 	$("#pictureArea").empty()
 	search = this.textContent
-	queryURL = "http://api.giphy.com/v1/gifs/search?q=" + search + "&api_key=" + APIKey + "&limit=5"
+	queryURL = "http://api.giphy.com/v1/gifs/search?q=" + search + "&api_key=" + APIKey + "&limit=10"
 	console.log(search, queryURL)	
 	console.log(this.textContent)
 	//ajax call
@@ -47,8 +50,8 @@ $(".button").click(function() {
    	var results = response.data
    
    	console.log(results[0].images.fixed_height.url)
-	embeds.push(results.map((result) => result.images.fixed_height.url))
-	stills.push(results.map((result) => result.images.fixed_height_still.url))	
+	embeds[0] = results.map((result) => result.images.fixed_height.url)
+//	stills.push(results.map((result) => result.images.fixed_height_still.url))	
 
 	//place images into image div
 	for (let i = 0; i<embeds[0].length; i++){
