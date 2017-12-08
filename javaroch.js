@@ -24,19 +24,30 @@ for (let i = 0; i < starterButtons.length; i++){
 	console.log("populated" + i)
 	}
 
+
+// on click, empty the picture area div, change search to the button pressed, update queryURL, make ajax call, log results, update embeds	
+$(".button").click(function(e) {
+
+
 //userInput adds button to array
-$("#submit").click(function(e) {
-//	e.preventDefault()
-	console.log($("#userInput").val().trim());
-	$('#buttonArea').prepend('<button id="userButton' + count + '" + class="button">' + $("#userInput").val().trim() + '</button>')
-	console.log("userButton" + count + " is " + $("#userInput").val().trim())
+$("#submit").click(function() {
+	var input = $("#userInput")
+	.val().trim()
+	$('#buttonArea')
+		.prepend('<button id="userButton' + count + '" + class="button">' + input + '</button>')
 	count++ 
 })//end userInput adds button to array
 
-// on click, empty the picture area div, change search to the button pressed, update queryURL, make ajax call, log results, update embeds	
-//$(".button").click(function(e) {
-$(document).on("click" , ".button" , function() {
-//	e.preventDefault()
+
+
+
+
+
+
+
+
+
+
 	$("#pictureArea").empty()
 	search = this.textContent
 	queryURL = "http://api.giphy.com/v1/gifs/search?q=" + search + "&api_key=" + APIKey + "&limit=10"
@@ -52,31 +63,24 @@ $(document).on("click" , ".button" , function() {
    
    	console.log(results[0].images.fixed_height.url)
 	embeds[0] = results.map((result) => result.images.fixed_height.url)
-
-	ratings[0] = results.map((result) => result.rating)
-//	stills.push(results.map((result) => result.images.fixed_height_still.url))	
+	ratings[0] = results.map((result) => result.rating)	
 
 	//place images into image div
 	for (let i = 0; i<embeds[0].length; i++){
+
+// 	//create container div for images
+// 	var container = $('<div />').attr({
+// 	"id": "imgContainer" + i
+// })
+	//create image
 	var img = $('<img />').attr({
 	
  	"id": "pic" + i,
 	"class": "image playing",
  	"src": embeds[0][i]})
-	$('#pictureArea').append(img)
-	
+	$('"#pic' + i + '"').wrap('<div></div>').appendTo($("#pictureArea"))
  	console.log(img)
 	}
-	//wrap images in div
-	$(".image").wrap("<div> </div>")
-	
-	//give id's to divs and add spans with ratings
-	for (let i = 0 ; i < embeds[0].length; i++) {
-		$("#pic" + i).parent().attr("id" , "imgContainer" + i).css({"display" : "inline" , "float" : "left"}).prepend("<h5 class='heading'>Rating: " + ratings[0][i] + "</h5>")
-	$(".heading").css("width" , "200px")
-	}	
-
-
 
 // image click
 
